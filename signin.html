@@ -88,6 +88,7 @@
     .divider { height: 1px; background: var(--box-border); margin: 0.25rem 0 0.75rem; border-radius: 1px; }
 
     .mobile-bottom-nav { display: none; }
+
     @media (max-width: 600px) {
       /* Only hide header buttons (not the header itself) on mobile */
       .header-bar .home-link { display: none !important; }
@@ -119,7 +120,6 @@
     footer { width: 100%; background: var(--footer-bg); color: var(--silver); text-align: center; padding: 2rem 1rem 1rem 1rem; margin-top: 3rem; letter-spacing: 0.5px; font-size: 1.05rem; border-top: 1px solid var(--box-border); box-shadow: 0 -2px 16px rgba(44,46,48,0.08); }
     .footer-nav { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem; flex-wrap: wrap; }
     .footer-btn { background: none; border: 2px solid transparent; color: var(--silver); font-family: var(--font-body); font-size: 1.07rem; font-weight: 500; padding: 0.2em 0.7em; cursor: pointer; border-radius: 6px; transition: background 0.18s, color 0.18s, border-color 0.18s; text-decoration: underline; }
-    .footer-btn:hover, .footer-btn:focus { background: var(--button-hover-bg); color: var(--button-hover-text); border-color: var(--button-hover-border); outline: none; text-decoration: none; }
   </style>
 </head>
 <body>
@@ -134,7 +134,7 @@
     <a href="services.html" class="home-link show-mobile">Services</a>
     <a href="messages.html" class="home-link show-mobile">Messages</a>
     <a href="profile.html" class="home-link show-mobile">Profile</a>
-    <a href="signin.html" class="home-link show-mobile" data-auth="signin" aria-current="page">Sign in</a>
+    <!-- Sign in link removed for mobile header -->
   </header>
 
   <main class="auth-wrap">
@@ -244,10 +244,7 @@
       <img class="nav-icon" src="assets/profile.png" alt="" aria-hidden="true" />
       <span class="nav-label">Profile</span>
     </a>
-    <a class="nav-item" href="signin.html" data-auth="signin" aria-current="page">
-      <img class="nav-icon" src="assets/profile.png" alt="" aria-hidden="true" />
-      <span class="nav-label">Sign in</span>
-    </a>
+    <!-- Sign in removed from mobile bottom nav -->
   </nav>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
