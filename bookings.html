@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Cookies Policy – LookList</title>
-  <meta name="description" content="Cookie Policy for LookList." />
+  <title>LookList – Bookings</title>
+  <meta name="description" content="View and manage your LookList bookings." />
   <link rel="icon" href="assets/logo1.png" type="image/png" sizes="any" />
   <link rel="apple-touch-icon" href="assets/logo1.png" />
   <link rel="shortcut icon" href="assets/logo1.png" />
@@ -13,8 +13,12 @@
     :root {
       --background: linear-gradient(135deg, #131415 0%, #09090a 100%);
       --silver: #cfd8dc;
+      --grey: #424549;
       --dark-grey: #181a1b;
+      --black: #101112;
+      --card: #23272a;
       --box-bg: linear-gradient(135deg, #141516 0%, #18191a 100%);
+      --service-bg: linear-gradient(135deg, #0c0d0e 0%, #191a1b 100%);
       --text: #e0e0e0;
       --font-header: 'Poppins', sans-serif;
       --font-body: 'Inter', Arial, sans-serif;
@@ -26,10 +30,14 @@
       --button-hover-border: #cfd8dc;
       --button-hover-text: #cfd8dc;
       --white: #fff;
+      --success: #66bb6a;
+      --warning: #ffa726;
     }
-    html, body { background: var(--background); color: var(--text); font-family: var(--font-body); margin: 0; padding: 0; min-height: 100vh; font-size: 18px; }
+    html, body { background: var(--background); color: var(--text); font-family: var(--font-body); margin: 0; padding: 0; min-height: 100vh; font-size: 18px; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, h4 { font-family: var(--font-header); font-weight: bold; margin: 0 0 0.5em 0; letter-spacing: 1px; color: var(--silver); }
+
     .header-bar { width: 100%; display: flex; align-items: center; justify-content: flex-start; padding: 1.1rem 2rem 1.1rem 1rem; background: var(--dark-grey); box-sizing: border-box; gap: 1.4rem; margin-bottom: 1.2rem; border-bottom: 1.5px solid var(--box-border); }
-    .logo-img { height: 42px; width: auto; display: block; border-radius: 12px; border: 2px solid var(--box-border); }
+    .logo-img { height: 42px; width: auto; border-radius: 12px; border: 2px solid var(--box-border); }
     .header-title { font-family: var(--font-header); font-size: 1.9rem; font-weight: bold; color: var(--silver); margin-right: auto; letter-spacing: 1.5px; }
     .home-link { color: var(--silver); font-family: var(--font-header); font-weight: bold; font-size: 1.18rem; text-decoration: none; background: var(--button-bg); border: 2px solid transparent; border-radius: 24px; padding: 0.32em 1.25em; cursor: pointer; transition: color 0.18s, border-color 0.18s, background 0.18s; }
     .home-link:hover, .home-link:focus { color: var(--button-hover-text); background: var(--button-hover-bg); border-color: var(--button-hover-border); }
@@ -37,21 +45,52 @@
     @media (max-width: 600px) {
       .show-mobile { display: inline-block; }
       .hide-mobile { display: none; }
-      /* Only hide header buttons (not the header itself) on mobile */
       .header-bar .home-link { display: none !important; }
     }
     .header-bar .nav-desktop { display: none; }
     @media (min-width: 1024px) { .header-bar .nav-desktop { display: inline-block; } }
-    main { max-width: 900px; margin: 2rem auto 3rem; padding: 2rem 1.25rem; background: var(--box-bg); border-radius: 20px; border: 2px solid var(--box-border); box-shadow: 0 4px 32px rgba(44,46,48,0.15); }
-    h1, h2, h3 { font-family: var(--font-header); color: var(--silver); }
-    h1 { font-size: 2.4rem; margin-bottom: 1.2rem; }
-    h2 { font-size: 1.5rem; margin-top: 2rem; }
-    h3 { font-size: 1.1rem; margin-top: 1.5rem; }
-    p, ul, ol { font-size: 1.1rem; line-height: 1.7; color: var(--text); }
+
+    .content { max-width: 900px; margin: 2rem auto 3rem; padding: 2rem 1.25rem; line-height: 1.65; background: var(--box-bg); border-radius: 20px; border: 2px solid var(--box-border); box-shadow: 0 4px 32px rgba(44,46,48,0.15); }
+    .intro { color: var(--accent); font-size: 1.08rem; margin-bottom: 1.1rem; text-align: center; }
+
+    .booking-list { display: grid; gap: 1rem; margin-top: 1rem; }
+    .booking-card {
+      background: var(--service-bg);
+      border-radius: 18px;
+      border: 2px solid var(--box-border);
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.75rem 1rem;
+      align-items: center;
+      transition: box-shadow 0.18s, border-color 0.18s, background 0.18s;
+    }
+    .booking-card:hover, .booking-card:focus-within { box-shadow: 0 8px 32px rgba(66,69,73,0.18); border-color: var(--silver); background: linear-gradient(135deg, #171819 0%, #232324 100%); }
+    .booking-title { font-family: var(--font-header); font-size: 1.15rem; color: var(--white); font-weight: bold; margin: 0; }
+    .booking-meta { color: var(--accent); font-size: 0.98rem; }
+    .status { font-weight: 700; }
+    .status.confirmed { color: var(--success); }
+    .status.pending { color: var(--warning); }
+    .card-actions { display: flex; gap: 0.6rem; }
+    .btn {
+      background: var(--button-bg); color: var(--silver); border: 2px solid var(--box-border);
+      padding: 0.55rem 0.9rem; border-radius: 12px; font-weight: 700; cursor: pointer; text-decoration: none;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .btn:hover, .btn:focus { background: var(--button-hover-bg); color: var(--button-hover-text); border-color: var(--button-hover-border); box-shadow: 0 6px 24px rgba(44,46,48,0.22); outline: none; }
+
+    footer { width: 100%; background: var(--footer-bg); color: var(--silver); text-align: center; padding: 2rem 1rem 1rem 1rem; margin-top: 3rem; letter-spacing: 0.5px; font-size: 1.05rem; border-top: 1px solid var(--box-border); box-shadow: 0 -2px 16px rgba(44,46,48,0.08); }
+    .footer-nav { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .footer-btn { background: none; border: 2px solid transparent; color: var(--silver); font-family: var(--font-body); font-size: 1.07rem; font-weight: 500; padding: 0.2em 0.7em; cursor: pointer; border-radius: 6px; transition: background 0.18s, color 0.18s, border-color 0.18s; text-decoration: underline; }
+    .footer-btn:hover, .footer-btn:focus { background: var(--button-hover-bg); color: var(--button-hover-text); border-color: var(--button-hover-border); outline: none; text-decoration: none; }
+
     .mobile-bottom-nav { display: none; }
     @media (max-width: 600px) {
-      main { padding: 1.1rem; }
+      .content { padding: 1.1rem; }
       .footer-nav { gap: 1rem; }
+
+      body { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
+      footer { padding-bottom: calc(2rem + 64px + env(safe-area-inset-bottom)); }
       .mobile-bottom-nav {
         position: fixed; left: 0; right: 0; bottom: 0; height: 64px;
         padding: 8px 8px calc(8px + env(safe-area-inset-bottom)) 8px;
@@ -63,13 +102,7 @@
       }
       .mobile-bottom-nav .nav-item:hover, .mobile-bottom-nav .nav-item:focus { color: var(--white); }
       .mobile-bottom-nav .nav-icon { width: 42px; height: 42px; object-fit: contain; border-radius: 6px; border: 1px solid var(--box-border); background: var(--button-bg); }
-      body { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
-      footer { padding-bottom: calc(2rem + 64px + env(safe-area-inset-bottom)); }
     }
-    footer { width: 100%; background: var(--footer-bg); color: var(--silver); text-align: center; padding: 2rem 1rem 1rem 1rem; margin-top: 3rem; letter-spacing: 0.5px; font-size: 1.05rem; border-top: 1px solid var(--box-border); box-shadow: 0 -2px 16px rgba(44,46,48,0.08); }
-    .footer-nav { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem; flex-wrap: wrap; }
-    .footer-btn { background: none; border: 2px solid transparent; color: var(--silver); font-family: var(--font-body); font-size: 1.07rem; font-weight: 500; padding: 0.2em 0.7em; cursor: pointer; border-radius: 6px; transition: background 0.18s, color 0.18s, border-color 0.18s; text-decoration: underline; }
-    .footer-btn:hover, .footer-btn:focus { background: var(--button-hover-bg); color: var(--button-hover-text); border-color: var(--button-hover-border); outline: none; text-decoration: none; }
   </style>
 </head>
 <body>
@@ -78,41 +111,45 @@
     <span class="header-title">Looklist</span>
     <a href="index.html" class="home-link hide-mobile">Home</a>
     <a href="services.html" class="home-link nav-desktop">Services</a>
-    <a href="bookings.html" class="home-link nav-desktop">Bookings</a>
+    <a href="bookings.html" class="home-link nav-desktop" aria-current="page">Bookings</a>
     <a href="messages.html" class="home-link nav-desktop">Messages</a>
     <a href="profile.html" class="home-link nav-desktop">Profile</a>
     <a href="signin.html" class="home-link nav-desktop" data-auth="signin">Sign in</a>
     <a href="services.html" class="home-link show-mobile">Services</a>
-    <a href="bookings.html" class="home-link show-mobile">Bookings</a>
+    <a href="bookings.html" class="home-link show-mobile" aria-current="page">Bookings</a>
     <a href="messages.html" class="home-link show-mobile">Messages</a>
     <a href="profile.html" class="home-link show-mobile">Profile</a>
   </header>
-  <main>
-    <h1>Cookie Policy</h1>
-    <p>This Cookie Policy explains how LookList uses cookies and similar technologies when you visit our website or use our app.</p>
-    <h2>1. What are cookies?</h2>
-    <p>Cookies are small text files stored on your device by your browser. They help websites remember information about your visit, such as your preferences and login status.</p>
-    <h2>2. How we use cookies</h2>
-    <ul>
-      <li>To enable essential site functionality, such as authentication and session management.</li>
-      <li>To improve your experience by remembering your preferences.</li>
-      <li>To analyze site usage and performance.</li>
-      <li>To display relevant content and offers.</li>
-    </ul>
-    <h2>3. Types of cookies we use</h2>
-    <ul>
-      <li><strong>Essential Cookies:</strong> Required for basic platform operations.</li>
-      <li><strong>Performance Cookies:</strong> Help us analyze usage to improve features.</li>
-      <li><strong>Functionality Cookies:</strong> Remember your preferences.</li>
-      <li><strong>Third-Party Cookies:</strong> Used by our partners for analytics and payment processing.</li>
-    </ul>
-    <h2>4. Managing cookies</h2>
-    <p>You may block or delete cookies in your browser settings. However, some features may not work if cookies are disabled.</p>
-    <h2>5. Changes to this policy</h2>
-    <p>We may update this Cookie Policy. Updates will be posted on this page and are effective immediately.</p>
-    <h2>6. Contact</h2>
-    <p>If you have questions about our Cookie Policy, contact us at support@looklist.co.uk.</p>
+
+  <main class="content">
+    <h1>Bookings</h1>
+    <p class="intro">Manage your upcoming and past bookings. You’ll see merchant details, times, and status here.</p>
+
+    <div class="booking-list" role="list">
+      <section class="booking-card" role="listitem" aria-label="Upcoming – Glam Studio – Bridal Makeup on Sep 10, 2:00 PM">
+        <div>
+          <p class="booking-title">Glam Studio — Bridal Makeup</p>
+          <div class="booking-meta">Sep 10, 2:00 PM · Mayfair, London · <span class="status confirmed">Confirmed</span></div>
+        </div>
+        <div class="card-actions">
+          <a href="#" class="btn">View</a>
+          <a href="#" class="btn">Reschedule</a>
+        </div>
+      </section>
+
+      <section class="booking-card" role="listitem" aria-label="Pending – Luxe Nails – Gel Manicure on Sep 14, 11:30 AM">
+        <div>
+          <p class="booking-title">Luxe Nails — Gel Manicure</p>
+          <div class="booking-meta">Sep 14, 11:30 AM · Kensington · <span class="status pending">Pending</span></div>
+        </div>
+        <div class="card-actions">
+          <a href="#" class="btn">View</a>
+          <a href="#" class="btn">Cancel</a>
+        </div>
+      </section>
+    </div>
   </main>
+
   <footer>
     <nav class="footer-nav">
       <a href="terms.html"><button class="footer-btn">Terms of Use</button></a>
@@ -121,6 +158,7 @@
     </nav>
     <div>© 2025 LookList. All rights reserved.</div>
   </footer>
+
   <nav class="mobile-bottom-nav" aria-label="Primary">
     <a class="nav-item" href="index.html">
       <img class="nav-icon" src="assets/home.png" alt="" aria-hidden="true" />
@@ -130,7 +168,7 @@
       <img class="nav-icon" src="assets/service.png" alt="" aria-hidden="true" />
       <span class="nav-label">Services</span>
     </a>
-    <a class="nav-item" href="bookings.html">
+    <a class="nav-item" href="bookings.html" aria-current="page">
       <img class="nav-icon" src="assets/service.png" alt="" aria-hidden="true" />
       <span class="nav-label">Bookings</span>
     </a>
@@ -143,10 +181,12 @@
       <span class="nav-label">Profile</span>
     </a>
   </nav>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="auth.js"></script>
   <script>
-    authInit().then(({ user }) => {
+    // Require auth to view bookings
+    authInit({ requireAuth: true }).then(({ user }) => {
       const signInLinks = document.querySelectorAll('[data-auth="signin"]');
       if (user) {
         signInLinks.forEach(el => {
