@@ -123,30 +123,10 @@
 
   <main class="content">
     <h1>Bookings</h1>
-    <p class="intro">Manage your upcoming and past bookings. You’ll see merchant details, times, and status here.</p>
+    <p class="intro">Manage your upcoming and past bookings.</p>
 
     <div class="booking-list" role="list">
-      <section class="booking-card" role="listitem" aria-label="Upcoming – Glam Studio – Bridal Makeup on Sep 10, 2:00 PM">
-        <div>
-          <p class="booking-title">Glam Studio — Bridal Makeup</p>
-          <div class="booking-meta">Sep 10, 2:00 PM · Mayfair, London · <span class="status confirmed">Confirmed</span></div>
-        </div>
-        <div class="card-actions">
-          <a href="#" class="btn">View</a>
-          <a href="#" class="btn">Reschedule</a>
-        </div>
-      </section>
-
-      <section class="booking-card" role="listitem" aria-label="Pending – Luxe Nails – Gel Manicure on Sep 14, 11:30 AM">
-        <div>
-          <p class="booking-title">Luxe Nails — Gel Manicure</p>
-          <div class="booking-meta">Sep 14, 11:30 AM · Kensington · <span class="status pending">Pending</span></div>
-        </div>
-        <div class="card-actions">
-          <a href="#" class="btn">View</a>
-          <a href="#" class="btn">Cancel</a>
-        </div>
-      </section>
+      <!-- Filled by bookings-page.js -->
     </div>
   </main>
 
@@ -184,24 +164,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="auth.js"></script>
-  <script>
-    // Require auth to view bookings
-    authInit({ requireAuth: true }).then(({ user }) => {
-      const signInLinks = document.querySelectorAll('[data-auth="signin"]');
-      if (user) {
-        signInLinks.forEach(el => {
-          el.textContent = 'Sign Out';
-          el.onclick = (e) => { e.preventDefault(); authSignOut(); };
-          el.setAttribute('href', '#');
-        });
-      } else {
-        signInLinks.forEach(el => {
-          el.textContent = 'Sign in';
-          el.onclick = null;
-          el.setAttribute('href', 'signin.html');
-        });
-      }
-    });
-  </script>
+  <script src="api.js"></script>
+  <script src="bookings-page.js"></script>
 </body>
 </html>

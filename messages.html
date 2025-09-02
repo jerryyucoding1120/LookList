@@ -56,7 +56,6 @@
     .thread-title { font-family: var(--font-header); font-size: 1.15rem; color: var(--white); font-weight: bold; margin: 0 0 0.16rem 0; letter-spacing: 1px; }
     .thread-snippet { color: var(--silver); margin: 0; font-size: 1rem; }
     .thread-meta { margin-left: auto; text-align: right; font-size: 0.95rem; color: var(--accent); min-width: 80px; }
-    .status-dot { width: 10px; height: 10px; background: #66bb6a; border-radius: 50%; display: inline-block; margin-left: 3px; }
     .mobile-bottom-nav { display: none; }
     @media (max-width: 600px) {
       .header-title { font-size: 1.3rem; }
@@ -106,29 +105,7 @@
     <h1>Messages</h1>
     <div class="note">Sign in to view and reply to your conversations.</div>
     <div class="thread-list" role="list">
-      <a class="thread" href="#" role="listitem" aria-label="Chat with Glam Studio about Bridal Makeup on Aug 25">
-        <img class="avatar" src="assets/profile.png" alt="" aria-hidden="true" />
-        <div>
-          <p class="thread-title">Glam Studio</p>
-          <p class="thread-snippet">Hi! Can you share your preferred time on Saturday?</p>
-        </div>
-        <div class="thread-meta">
-          <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;">
-            <span>Aug 25</span>
-            <span class="status-dot" title="unread"></span>
-          </div>
-        </div>
-      </a>
-      <a class="thread" href="#" role="listitem" aria-label="Chat with Luxe Nails about Gel Manicure on Aug 21">
-        <img class="avatar" src="assets/profile.png" alt="" aria-hidden="true" />
-        <div>
-          <p class="thread-title">Luxe Nails</p>
-          <p class="thread-snippet">Your appointment is confirmed for 2:00 PM.</p>
-        </div>
-        <div class="thread-meta">
-          <span>Aug 21</span>
-        </div>
-      </a>
+      <!-- Filled by messages-page.js -->
     </div>
   </main>
   <footer>
@@ -163,23 +140,7 @@
   </nav>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="auth.js"></script>
-  <script>
-    authInit({ requireAuth: true }).then(({ user }) => {
-      const signInLinks = document.querySelectorAll('[data-auth="signin"]');
-      if (user) {
-        signInLinks.forEach(el => {
-          el.textContent = 'Sign Out';
-          el.onclick = (e) => { e.preventDefault(); authSignOut(); };
-          el.setAttribute('href', '#');
-        });
-      } else {
-        signInLinks.forEach(el => {
-          el.textContent = 'Sign in';
-          el.onclick = null;
-          el.setAttribute('href', 'signin.html');
-        });
-      }
-    });
-  </script>
+  <script src="api.js"></script>
+  <script src="messages-page.js"></script>
 </body>
 </html>
