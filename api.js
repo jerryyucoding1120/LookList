@@ -79,6 +79,7 @@
     return handle(await q);
   }
 
+  // Fetch messages for many threads; reduce client-side to last per thread
   async function listLastMessagesForThreads(threadIds) {
     if (!threadIds?.length) return [];
     const client = await sp();
@@ -117,10 +118,11 @@
     return handle(await q);
   }
 
+  // Select * to avoid errors if column names differ; compute display name later
   async function getProfilesMany(ids) {
     if (!ids?.length) return [];
     const client = await sp();
-    const q = client.from('profiles').select('id, full_name, username').in('id', ids);
+    const q = client.from('profiles').select('*').in('id', ids);
     return handle(await q);
   }
 
