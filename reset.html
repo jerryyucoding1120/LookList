@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LookList – Reset Password</title>
+  <meta name="description" content="Reset your LookList account password." />
+  <link rel="icon" href="assets/logo1.png" type="image/png" sizes="any" />
+  <link rel="apple-touch-icon" href="assets/logo1.png" />
+  <link rel="shortcut icon" href="assets/logo1.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: linear-gradient(135deg, #131415 0%, #09090a 100%);
+      --silver: #cfd8dc;
+      --grey: #424549;
+      --dark-grey: #181a1b;
+      --text: #e0e0e0;
+      --font-header: 'Poppins', sans-serif;
+      --font-body: 'Inter', Arial, sans-serif;
+      --accent: #cfd8dc;
+      --footer-bg: #101112;
+      --box-border: #252728;
+      --button-bg: #23272a;
+      --button-border: #cfd8dc;
+      --button-hover-bg: transparent;
+      --button-hover-border: #cfd8dc;
+      --button-hover-text: #cfd8dc;
+      --focus: #90caf9;
+      --danger: #ef5350;
+      --success: #66bb6a;
+      --white: #fff;
+    }
+    html, body { background: var(--background); color: var(--text); font-family: var(--font-body); margin: 0; padding: 0; min-height: 100vh; font-size: 18px; -webkit-font-smoothing: antialiased; }
+    a { color: var(--silver); text-decoration: underline; }
+    .header-bar { width: 100%; display: flex; align-items: center; gap: 1.4rem; padding: 1.1rem 2rem 1.1rem 1rem; background: var(--dark-grey); border-bottom: 1.5px solid var(--box-border); }
+    .logo-img { height: 42px; width: auto; border-radius: 12px; border: 2px solid var(--box-border); }
+    .header-title { font-family: var(--font-header); font-size: 1.9rem; font-weight: bold; color: var(--silver); margin-right: auto; letter-spacing: 1.5px; }
+    .home-link { color: var(--silver); font-family: var(--font-header); font-weight: bold; font-size: 1.18rem; text-decoration: none; background: var(--button-bg); border: 2px solid transparent; border-radius: 24px; padding: 0.32em 1.25em; }
+    .home-link:hover, .home-link:focus { color: var(--button-hover-text); background: var(--button-hover-bg); border-color: var(--button-hover-border); }
+    .auth-wrap { display: flex; justify-content: center; align-items: flex-start; padding: 1rem; }
+    .auth-card { width: 100%; max-width: 720px; background: linear-gradient(135deg, #141516 0%, #18191a 100%); border-radius: 24px; border: 2px solid var(--box-border); box-shadow: 0 4px 32px rgba(44,46,48,0.15); padding: 1.25rem; }
+    .title { font-family: var(--font-header); color: var(--silver); margin: 0 0 0.75rem; }
+    .muted { color: var(--accent); font-size: 1rem; margin: 0.25rem 0 1rem; }
+    .form { display: grid; gap: 0.75rem; }
+    .form-row { display: grid; gap: 0.35rem; }
+    label { color: var(--silver); font-weight: 600; }
+    .input { background: #0f1112; color: var(--text); border: 1.5px solid var(--box-border); border-radius: 12px; padding: 0.75rem 0.9rem; font-size: 1rem; transition: border-color 0.18s, box-shadow 0.18s; }
+    .input:focus { outline: none; border-color: var(--focus); box-shadow: 0 0 0 3px rgba(144,202,249,0.15); }
+    .btn { background: var(--button-bg); color: var(--silver); border: 2px solid var(--button-border); padding: 0.8rem 1.4rem; border-radius: 16px; font-weight: 700; cursor: pointer; text-decoration: none; transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s; }
+    .btn:hover, .btn:focus { background: var(--button-hover-bg); color: var(--button-hover-text); border-color: var(--button-hover-border); box-shadow: 0 6px 24px rgba(44,46,48,0.22); outline: none; }
+    .actions { display: flex; gap: 0.75rem; align-items: center; justify-content: flex-start; flex-wrap: wrap; }
+    .error { color: var(--danger); font-size: 0.95rem; }
+    .success { color: var(--success); font-size: 0.98rem; font-weight: 600; }
+    footer { width: 100%; background: var(--footer-bg); color: var(--silver); text-align: center; padding: 2rem 1rem 1rem 1rem; margin-top: 3rem; letter-spacing: 0.5px; font-size: 1.05rem; border-top: 1px solid var(--box-border); box-shadow: 0 -2px 16px rgba(44,46,48,0.08); }
+    .footer-nav { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .footer-btn { background: none; border: 2px solid transparent; color: var(--silver); font-family: var(--font-body); font-size: 1.07rem; font-weight: 500; padding: 0.2em 0.7em; cursor: pointer; border-radius: 6px; text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <a href="index.html"><img src="assets/logo1.png" alt="LookList Logo" class="logo-img" /></a>
+    <span class="header-title">Looklist</span>
+    <a href="index.html" class="home-link">Home</a>
+    <a href="signin.html" class="home-link" data-auth="signin">Sign in</a>
+  </header>
+
+  <main class="auth-wrap">
+    <section class="auth-card">
+      <h1 class="title">Reset Password</h1>
+      <p class="muted" id="page-help">
+        Request a reset link, or if you arrived via the email link, set a new password below.
+      </p>
+
+      <!-- Request reset link -->
+      <form id="request-form" class="form" novalidate>
+        <div class="form-row">
+          <label for="req-email">Email</label>
+          <input id="req-email" type="email" class="input" autocomplete="email" required placeholder="you@example.com" />
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn">Send reset email</button>
+          <a href="signin.html" class="btn" style="background:transparent;border-color:transparent;">Back to Sign in</a>
+        </div>
+        <div id="request-status" aria-live="polite"></div>
+      </form>
+
+      <!-- Set new password (shown when coming from recovery link) -->
+      <form id="reset-form" class="form" novalidate hidden>
+        <div class="form-row">
+          <label for="new-pass">New password</label>
+          <input id="new-pass" type="password" class="input" autocomplete="new-password" required placeholder="At least 8 characters" />
+        </div>
+        <div class="form-row">
+          <label for="new-pass2">Confirm password</label>
+          <input id="new-pass2" type="password" class="input" autocomplete="new-password" required placeholder="Re-enter password" />
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn">Update password</button>
+        </div>
+        <div id="reset-status" aria-live="polite"></div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <nav class="footer-nav">
+      <a href="terms.html"><button class="footer-btn">Terms of Use</button></a>
+      <a href="privacy.html"><button class="footer-btn">Privacy Policy</button></a>
+      <a href="cookies.html"><button class="footer-btn">Cookie Policy</button></a>
+    </nav>
+    <div>© 2025 LookList. All rights reserved.</div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="auth.js"></script>
+  <script>
+    // Helper: detect "type=recovery" from email link
+    function urlHashParams() {
+      try { return new URLSearchParams(window.location.hash.slice(1)); } catch { return new URLSearchParams(); }
+    }
+    function isRecoveryVisit() {
+      const p = urlHashParams();
+      return (p.get('type') || '').toLowerCase() === 'recovery';
+    }
+    function resetRedirectUrl() {
+      // Where the email link should redirect back to (must be in Supabase Redirect URLs)
+      // e.g., https://your-domain/reset.html
+      return window.location.origin + window.location.pathname.replace(/[^\\/]+$/, 'reset.html');
+    }
+
+    // Toggle panels
+    function showRequestPanel() {
+      document.getElementById('request-form').hidden = false;
+      document.getElementById('reset-form').hidden = true;
+      const help = document.getElementById('page-help');
+      if (help) help.textContent = 'Request a reset link. We will email you a secure link to set a new password.';
+    }
+    function showResetPanel() {
+      document.getElementById('request-form').hidden = true;
+      document.getElementById('reset-form').hidden = false;
+      const help = document.getElementById('page-help');
+      if (help) help.textContent = 'Enter a new password for your account.';
+    }
+
+    (async function init() {
+      // Standard header behavior
+      const { user } = await authInit().catch(() => ({ user: null }));
+      const signInLinks = document.querySelectorAll('[data-auth="signin"]');
+      if (user) {
+        signInLinks.forEach(el => {
+          el.textContent = 'Sign Out';
+          el.onclick = (e) => { e.preventDefault(); authSignOut(); };
+          el.setAttribute('href', '#');
+        });
+      } else {
+        signInLinks.forEach(el => {
+          el.textContent = 'Sign in';
+          el.onclick = null;
+          el.setAttribute('href', 'signin.html');
+        });
+      }
+
+      // If the email link redirected here (type=recovery), show reset panel
+      if (isRecoveryVisit()) showResetPanel();
+      else showRequestPanel();
+
+      // Also react to Supabase auth state events (defensive)
+      window.authClients.spLocal.auth.onAuthStateChange((event, session) => {
+        if (event === 'PASSWORD_RECOVERY' || isRecoveryVisit()) showResetPanel();
+      });
+      window.authClients.spSession.auth.onAuthStateChange((event, session) => {
+        if (event === 'PASSWORD_RECOVERY' || isRecoveryVisit()) showResetPanel();
+      });
+    })();
+
+    // Request reset email
+    document.getElementById('request-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const status = document.getElementById('request-status');
+      status.textContent = '';
+      const email = document.getElementById('req-email').value.trim().toLowerCase();
+      if (!email) { status.innerHTML = '<span class="error">Enter your email.</span>'; return; }
+      try {
+        const { error } = await window.authClients.spLocal.auth.resetPasswordForEmail(email, {
+          redirectTo: resetRedirectUrl()
+        });
+        if (error) throw error;
+        status.innerHTML = '<span class="success">If that email exists, a reset link has been sent. Check your inbox.</span>';
+      } catch (err) {
+        status.innerHTML = `<span class="error">${err?.message || 'Failed to send reset email.'}</span>`;
+      }
+    });
+
+    // Set new password (after magic link)
+    document.getElementById('reset-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const status = document.getElementById('reset-status');
+      status.textContent = '';
+      const p1 = document.getElementById('new-pass').value;
+      const p2 = document.getElementById('new-pass2').value;
+      if (!p1 || p1.length < 8) { status.innerHTML = '<span class="error">Password must be at least 8 characters.</span>'; return; }
+      if (p1 !== p2) { status.innerHTML = '<span class="error">Passwords do not match.</span>'; return; }
+
+      try {
+        // The recovery link creates a temporary session (detectSessionInUrl is true in auth.js)
+        const { error } = await window.authClients.spLocal.auth.updateUser({ password: p1 });
+        if (error) throw error;
+        status.innerHTML = '<span class="success">Password updated. Redirecting to sign in…</span>';
+        // Clear session used for recovery and send to sign-in
+        await window.authClients.spLocal.auth.signOut().catch(() => {});
+        setTimeout(() => { window.location.replace('signin.html'); }, 600);
+      } catch (err) {
+        status.innerHTML = `<span class="error">${err?.message || 'Failed to update password.'}</span>`;
+      }
+    });
+  </script>
+</body>
+</html>

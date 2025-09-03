@@ -39,29 +39,19 @@
     a { color: var(--silver); text-decoration: underline; transition: color 0.2s; }
     a:hover, a:focus { color: var(--accent); text-decoration: underline; }
 
-    .header-bar {
-      width: 100%; display: flex; align-items: center; justify-content: flex-start;
-      padding: 1.1rem 2rem 1.1rem 1rem; background: var(--dark-grey); box-sizing: border-box; gap: 1.4rem;
-      margin-bottom: 1.2rem; border-bottom: 1.5px solid var(--box-border);
-    }
+    .header-bar { width: 100%; display: flex; align-items: center; justify-content: flex-start; padding: 1.1rem 2rem 1.1rem 1rem; background: var(--dark-grey); box-sizing: border-box; gap: 1.4rem; margin-bottom: 1.2rem; border-bottom: 1.5px solid var(--box-border); }
     .logo-img { height: 42px; width: auto; display: block; border-radius: 12px; border: 2px solid var(--box-border); }
     .header-title { font-family: var(--font-header); font-size: 1.9rem; font-weight: bold; color: var(--silver); margin-right: auto; letter-spacing: 1.5px; }
-    .home-link {
-      color: var(--silver); font-family: var(--font-header); font-weight: bold; font-size: 1.18rem; text-decoration: none;
-      background: var(--button-bg); border: 2px solid transparent; border-radius: 24px; padding: 0.32em 1.25em; cursor: pointer;
-      transition: color 0.18s, border-color 0.18s, background 0.18s;
-    }
+    .home-link { color: var(--silver); font-family: var(--font-header); font-weight: bold; font-size: 1.18rem; text-decoration: none; background: var(--button-bg); border: 2px solid transparent; border-radius: 24px; padding: 0.32em 1.25em; cursor: pointer; transition: color 0.18s, border-color 0.18s, background 0.18s; }
     .home-link:hover, .home-link:focus { color: var(--button-hover-text); background: var(--button-hover-bg); border-color: var(--button-hover-border); }
+
     .show-mobile { display: none; } .hide-mobile { display: inline-block; }
-
     .header-bar .nav-desktop { display: none; }
-    @media (min-width: 1024px) { .header-bar .nav-desktop { display: inline-block; } }
+    @media (min-width: 1024px) { .header-bar .nav-desktop { display: inline-block; }
 
-    .auth-wrap { display: flex; justify-content: center; align-items: flex-start; padding: 1rem; }
-    .auth-card {
-      width: 100%; max-width: 720px; background: var(--box-bg); border-radius: 24px; border: 2px solid var(--box-border);
-      box-shadow: 0 4px 32px rgba(44,46,48,0.15); padding: 1.25rem;
     }
+    .auth-wrap { display: flex; justify-content: center; align-items: flex-start; padding: 1rem; }
+    .auth-card { width: 100%; max-width: 720px; background: var(--box-bg); border-radius: 24px; border: 2px solid var(--box-border); box-shadow: 0 4px 32px rgba(44,46,48,0.15); padding: 1.25rem; }
     .auth-header { display: flex; gap: 0.5rem; justify-content: center; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; }
     .tab-btn { background: var(--button-bg); color: var(--silver); border: 2px solid var(--box-border); border-radius: 999px; padding: 0.6rem 1.2rem; font-weight: 700; font-family: var(--font-header); letter-spacing: 0.5px; cursor: pointer; transition: background 0.18s, color 0.18s, border-color 0.18s, box-shadow 0.18s; }
     .tab-btn[aria-selected="true"] { border-color: var(--button-border); color: var(--white); box-shadow: 0 4px 18px rgba(44,46,48,0.22); }
@@ -69,52 +59,32 @@
     .auth-body { display: grid; gap: 0.9rem; padding: 0.5rem; }
     .form-row { display: grid; gap: 0.35rem; }
     label { color: var(--silver); font-weight: 600; }
-    .input {
-      background: #0f1112; color: var(--text); border: 1.5px solid var(--box-border); border-radius: 12px; padding: 0.75rem 0.9rem; font-size: 1rem;
-      transition: border-color 0.18s, box-shadow 0.18s;
-    }
+    .input { background: #0f1112; color: var(--text); border: 1.5px solid var(--box-border); border-radius: 12px; padding: 0.75rem 0.9rem; font-size: 1rem; transition: border-color 0.18s, box-shadow 0.18s; }
     .input:focus { outline: none; border-color: var(--focus); box-shadow: 0 0 0 3px rgba(144,202,249,0.15); }
     .form-help { color: var(--accent); font-size: 0.92rem; }
     .error { color: var(--danger); font-size: 0.92rem; }
     .success { color: var(--success); font-size: 0.98rem; font-weight: 600; }
     .row-split { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
     .actions { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.5rem; }
-    .btn {
-      background: var(--button-bg); color: var(--silver); border: 2px solid var(--button-border);
-      padding: 0.8rem 1.4rem; border-radius: 16px; font-weight: 700; cursor: pointer; text-decoration: none;
-      transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
-    }
+    .btn { background: var(--button-bg); color: var(--silver); border: 2px solid var(--button-border); padding: 0.8rem 1.4rem; border-radius: 16px; font-weight: 700; cursor: pointer; text-decoration: none; transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s; }
     .btn:hover, .btn:focus { background: var(--button-hover-bg); color: var(--button-hover-text); border-color: var(--button-hover-border); box-shadow: 0 6px 24px rgba(44,46,48,0.22); outline: none; }
-    .divider { height: 1px; background: var(--box-border); margin: 0.25rem 0 0.75rem; border-radius: 1px; }
 
     .mobile-bottom-nav { display: none; }
-
     @media (max-width: 600px) {
-      /* Only hide header buttons (not the header itself) on mobile */
       .header-bar .home-link { display: none !important; }
       .show-mobile { display: inline-block; } .hide-mobile { display: none; }
-
       .auth-card { padding: 0.9rem; }
       .row-split { grid-template-columns: 1fr; }
       body { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
       footer { padding-bottom: calc(2rem + 64px + env(safe-area-inset-bottom)); }
-
       .mobile-bottom-nav {
-        position: fixed; left: 0; right: 0; bottom: 0; height: 64px;
-        padding: 8px 8px calc(8px + env(safe-area-inset-bottom)) 8px;
+        position: fixed; left: 0; right: 0; bottom: 0; height: 64px; padding: 8px 8px calc(8px + env(safe-area-inset-bottom)) 8px;
         background: var(--footer-bg); border-top: 1px solid var(--box-border);
         display: flex; justify-content: space-around; align-items: center; z-index: 1000;
       }
-      .mobile-bottom-nav .nav-item {
-        display: flex; flex-direction: column; align-items: center; gap: 0.25rem; text-decoration: none; color: var(--silver);
-        font-size: 0.72rem; padding: 0.25rem 0.5rem; min-width: 64px;
-      }
-      .mobile-bottom-nav .nav-item:focus,
-      .mobile-bottom-nav .nav-item:hover { color: var(--white); }
-      .mobile-bottom-nav .nav-icon {
-        width: 42px; height: 42px; object-fit: contain; border-radius: 6px;
-        border: 1px solid var(--box-border); background: var(--button-bg);
-      }
+      .mobile-bottom-nav .nav-item { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; text-decoration: none; color: var(--silver); font-size: 0.72rem; padding: 0.25rem 0.5rem; min-width: 64px; }
+      .mobile-bottom-nav .nav-item:hover, .mobile-bottom-nav .nav-item:focus { color: var(--white); }
+      .mobile-bottom-nav .nav-icon { width: 42px; height: 42px; object-fit: contain; border-radius: 6px; border: 1px solid var(--box-border); background: var(--button-bg); }
     }
 
     footer { width: 100%; background: var(--footer-bg); color: var(--silver); text-align: center; padding: 2rem 1rem 1rem 1rem; margin-top: 3rem; letter-spacing: 0.5px; font-size: 1.05rem; border-top: 1px solid var(--box-border); box-shadow: 0 -2px 16px rgba(44,46,48,0.08); }
@@ -136,7 +106,6 @@
     <a href="bookings.html" class="home-link show-mobile">Bookings</a>
     <a href="messages.html" class="home-link show-mobile">Messages</a>
     <a href="profile.html" class="home-link show-mobile">Profile</a>
-    <!-- Sign in link removed for mobile header -->
   </header>
 
   <main class="auth-wrap">
@@ -146,7 +115,7 @@
         <button id="tab-signin" class="tab-btn" role="tab" aria-selected="true" aria-controls="panel-signin">Sign In</button>
         <button id="tab-signup" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-signup">Sign Up</button>
       </div>
-      <div class="divider" aria-hidden="true"></div>
+      <div class="divider" style="height:1px;background:var(--box-border);margin:0.25rem 0 0.75rem;border-radius:1px;" aria-hidden="true"></div>
 
       <!-- Sign In Panel -->
       <section id="panel-signin" class="auth-body" role="tabpanel" aria-labelledby="tab-signin">
@@ -162,6 +131,11 @@
             <input id="signin-password" name="password" type="password" class="input" autocomplete="current-password" required placeholder="Your password" />
             <div class="error" id="signin-password-error" hidden></div>
           </div>
+
+          <div class="form-help" style="margin-top:-0.4rem;">
+            <a href="reset.html">Forgot your password?</a>
+          </div>
+
           <div class="actions">
             <label style="display:flex;align-items:center;gap:0.5rem;">
               <input id="remember-me" type="checkbox" /> <span class="muted">Remember me</span>
@@ -213,7 +187,7 @@
         </form>
       </section>
 
-      <div class="divider" aria-hidden="true"></div>
+      <div class="divider" style="height:1px;background:var(--box-border);margin:0.25rem 0 0.75rem;border-radius:1px;" aria-hidden="true"></div>
       <p class="muted">
         This page uses Supabase for authentication. If you don’t receive a confirmation email after sign up, check your spam folder.
       </p>
@@ -250,7 +224,6 @@
       <img class="nav-icon" src="assets/profile.png" alt="" aria-hidden="true" />
       <span class="nav-label">Profile</span>
     </a>
-    <!-- Sign in removed from mobile bottom nav -->
   </nav>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -304,9 +277,7 @@
     document.getElementById('go-signin')?.addEventListener('click', (e) => { e.preventDefault(); setActiveTab('signin'); });
 
     // Choose client based on "Remember me"
-    function activeClient(remember) {
-      return remember ? window.authClients.spLocal : window.authClients.spSession;
-    }
+    function activeClient(remember) { return remember ? window.authClients.spLocal : window.authClients.spSession; }
     function persistentClient() { return window.authClients.spLocal; }
 
     window.authClients.spLocal.auth.onAuthStateChange((_e, session) => { if (session) window.location.replace(getNextUrl()); });
@@ -315,7 +286,6 @@
     // Sign In (Supabase)
     document.getElementById('signin-form').addEventListener('submit', async (e) => {
       e.preventDefault();
-
       const email = document.getElementById('signin-email').value.trim().toLowerCase();
       const password = document.getElementById('signin-password').value;
       const remember = document.getElementById('remember-me').checked;
@@ -343,10 +313,9 @@
       }
     });
 
-    // Sign Up (Supabase) – stores "name" in user metadata
+    // Sign Up (Supabase)
     document.getElementById('signup-form').addEventListener('submit', async (e) => {
       e.preventDefault();
-
       const email = document.getElementById('signup-email').value.trim().toLowerCase();
       const password = document.getElementById('signup-password').value;
       const name = document.getElementById('signup-name').value.trim();
@@ -356,21 +325,11 @@
       const status = document.getElementById('signup-status');
       status.textContent = '';
 
-      if (password !== confirm) {
-        status.innerHTML = '<span class="error">Passwords do not match.</span>';
-        return;
-      }
-      if (!terms) {
-        status.innerHTML = '<span class="error">You must accept the Terms.</span>';
-        return;
-      }
+      if (password !== confirm) { status.innerHTML = '<span class="error">Passwords do not match.</span>'; return; }
+      if (!terms) { status.innerHTML = '<span class="error">You must accept the Terms.</span>'; return; }
 
       try {
-        const { error } = await persistentClient().auth.signUp({
-          email,
-          password,
-          options: { data: { name } }
-        });
+        const { error } = await persistentClient().auth.signUp({ email, password, options: { data: { name } } });
         if (error) throw error;
         status.innerHTML = '<span class="success">Check your email to confirm your account!</span>';
       } catch (err) {
