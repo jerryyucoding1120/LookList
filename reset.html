@@ -115,18 +115,16 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="auth.js"></script>
   <script>
-    // Helper: detect "type=recovery" from email link
+    // EXACT redirect URL (case-sensitive, must match Supabase allowlist)
+    const RESET_URL = 'https://jerryyucoding1120.github.io/LookList/reset.html';
+
+    // Helper: detect "type=recovery" from email link (hash-style links)
     function urlHashParams() {
       try { return new URLSearchParams(window.location.hash.slice(1)); } catch { return new URLSearchParams(); }
     }
     function isRecoveryVisit() {
       const p = urlHashParams();
       return (p.get('type') || '').toLowerCase() === 'recovery';
-    }
-    function resetRedirectUrl() {
-      // Where the email link should redirect back to (must be in Supabase Redirect URLs)
-      // e.g., https://your-domain/reset.html
-      return window.location.origin + window.location.pathname.replace(/[^\\/]+$/, 'reset.html');
     }
 
     // Toggle panels
@@ -144,8 +142,19 @@
     }
 
     (async function init() {
-      // Standard header behavior
       const { user } = await authInit().catch(() => ({ user: null }));
+
+      // Try to exchange "code" style links into a session (safe to call; no-op if not present)
+      try {
+        const { data, error } = await window.authClients.spLocal.auth.exchangeCodeForSession(window.location.href);
+        if (!error && data?.session) {
+          showResetPanel(); // user is now in a temporary recovery session
+        }
+      } catch (e) {
+        console.debug('exchangeCodeForSession:', e?.message);
+      }
+
+      // Standard header behavior
       const signInLinks = document.querySelectorAll('[data-auth="signin"]');
       if (user) {
         signInLinks.forEach(el => {
@@ -161,15 +170,15 @@
         });
       }
 
-      // If the email link redirected here (type=recovery), show reset panel
+      // If the email link redirected here (hash-style type=recovery), show reset panel
       if (isRecoveryVisit()) showResetPanel();
       else showRequestPanel();
 
-      // Also react to Supabase auth state events (defensive)
-      window.authClients.spLocal.auth.onAuthStateChange((event, session) => {
+      // Also react to Supabase auth state events
+      window.authClients.spLocal.auth.onAuthStateChange((event) => {
         if (event === 'PASSWORD_RECOVERY' || isRecoveryVisit()) showResetPanel();
       });
-      window.authClients.spSession.auth.onAuthStateChange((event, session) => {
+      window.authClients.spSession.auth.onAuthStateChange((event) => {
         if (event === 'PASSWORD_RECOVERY' || isRecoveryVisit()) showResetPanel();
       });
     })();
@@ -183,7 +192,7 @@
       if (!email) { status.innerHTML = '<span class="error">Enter your email.</span>'; return; }
       try {
         const { error } = await window.authClients.spLocal.auth.resetPasswordForEmail(email, {
-          redirectTo: resetRedirectUrl()
+          redirectTo: RESET_URL
         });
         if (error) throw error;
         status.innerHTML = '<span class="success">If that email exists, a reset link has been sent. Check your inbox.</span>';
@@ -203,11 +212,9 @@
       if (p1 !== p2) { status.innerHTML = '<span class="error">Passwords do not match.</span>'; return; }
 
       try {
-        // The recovery link creates a temporary session (detectSessionInUrl is true in auth.js)
         const { error } = await window.authClients.spLocal.auth.updateUser({ password: p1 });
         if (error) throw error;
         status.innerHTML = '<span class="success">Password updated. Redirecting to sign in…</span>';
-        // Clear session used for recovery and send to sign-in
         await window.authClients.spLocal.auth.signOut().catch(() => {});
         setTimeout(() => { window.location.replace('signin.html'); }, 600);
       } catch (err) {
