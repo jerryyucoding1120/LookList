@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>LookList – Services</title>
-  <meta name="description" content="Browse premium beauty services near you on LookList." />
+  <title>LookList – Search</title>
+  <meta name="description" content="Search premium beauty services near you on LookList." />
   <link rel="icon" href="assets/logo1.png" type="image/png" sizes="any" />
   <link rel="apple-touch-icon" href="assets/logo1.png" />
   <link rel="shortcut icon" href="assets/logo1.png" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="patch-additions.css" />
   <style>
     :root {
       --background: linear-gradient(135deg, #131415 0%, #09090a 100%);
@@ -33,65 +34,46 @@
     }
     html, body { background: var(--background); color: var(--text); font-family: var(--font-body); margin: 0; padding: 0; min-height: 100vh; font-size: 18px; -webkit-font-smoothing: antialiased; }
     h1, h2, h3, h4 { font-family: var(--font-header); font-weight: bold; margin: 0 0 0.5em 0; letter-spacing: 1px; color: var(--silver); }
+    a { color: var(--silver); text-decoration: underline; transition: color 0.2s; }
+    a:hover, a:focus { color: var(--accent); text-decoration: underline; }
 
     .header-bar { width: 100%; display: flex; align-items: center; justify-content: flex-start; padding: 1.1rem 2rem 1.1rem 1rem; background: var(--dark-grey); box-sizing: border-box; gap: 1.4rem; margin-bottom: 1.2rem; border-bottom: 1.5px solid var(--box-border); }
     .logo-img { height: 42px; width: auto; border-radius: 12px; border: 2px solid var(--box-border); }
     .header-title { font-family: var(--font-header); font-size: 1.9rem; font-weight: bold; color: var(--silver); margin-right: auto; letter-spacing: 1.5px; }
     .home-link { color: var(--silver); font-family: var(--font-header); font-weight: bold; font-size: 1.18rem; text-decoration: none; background: var(--button-bg); border: 2px solid transparent; border-radius: 24px; padding: 0.32em 1.25em; cursor: pointer; transition: color 0.18s, border-color 0.18s, background 0.18s; }
     .home-link:hover, .home-link:focus { color: var(--button-hover-text); background: var(--button-hover-bg); border-color: var(--button-hover-border); }
-
     .show-mobile { display: none; } .hide-mobile { display: inline-block; }
     @media (max-width: 600px) {
       .show-mobile { display: inline-block; }
       .hide-mobile { display: none; }
-      /* Only hide header buttons (not the header itself) on mobile */
       .header-bar .home-link { display: none !important; }
     }
-
     .header-bar .nav-desktop { display: none; }
     @media (min-width: 1024px) { .header-bar .nav-desktop { display: inline-block; } }
 
     .content { max-width: 1020px; margin: 2rem auto 3rem; padding: 2rem 1.25rem; line-height: 1.65; background: var(--box-bg); border-radius: 20px; border: 2px solid var(--box-border); box-shadow: 0 4px 32px rgba(44,46,48,0.15); box-sizing: border-box; }
-    .intro { text-align: center; margin-bottom: 1.5rem; color: var(--accent); font-size: 1.1rem; }
-
-    .service-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; width: 100%; margin: 1rem auto 0; justify-items: stretch; box-sizing: border-box; }
-    .service-box { background: var(--service-bg); border-radius: 22px; border: 2px solid var(--box-border); box-shadow: 0 2px 18px rgba(18,18,20,0.22); width: 100%; max-width: 100%; height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.1rem 1rem; transition: box-shadow 0.18s, border-color 0.18s, background 0.18s; box-sizing: border-box; }
-    .service-box:hover, .service-box:focus { box-shadow: 0 8px 32px rgba(66,69,73,0.18); border-color: var(--silver); background: linear-gradient(135deg, #171819 0%, #232324 100%); }
-    .service-img { width: 82px; height: 82px; object-fit: cover; border-radius: 16px; margin-bottom: 1.1rem; background: var(--grey); border: 2px solid var(--box-border); box-shadow: 0 2px 10px rgba(66,69,73,0.14); }
-    .service-title { font-family: var(--font-header); font-size: 1.22rem; color: var(--white); font-weight: bold; margin-bottom: 0.3rem; margin-top: 0; letter-spacing: 1px; text-align: center; }
-
-    .mobile-bottom-nav { display: none; }
+    .intro { text-align: left; margin-bottom: 1.2rem; color: var(--accent); font-size: 1.05rem; }
+    .filters { display: grid; gap: .7rem; margin-bottom: 1rem; }
+    .input, .select { background:#0f1112; color:var(--text); border:1.5px solid var(--box-border); border-radius:12px; padding:.65rem .8rem; }
 
     footer { width: 100%; background: var(--footer-bg); color: var(--silver); text-align: center; padding: 2rem 1rem 1rem 1rem; margin-top: 3rem; letter-spacing: 0.5px; font-size: 1.05rem; border-top: 1px solid var(--box-border); box-shadow: 0 -2px 16px rgba(44,46,48,0.08); }
     .footer-nav { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem; flex-wrap: wrap; }
     .footer-btn { background: none; border: 2px solid transparent; color: var(--silver); font-family: var(--font-body); font-size: 1.07rem; font-weight: 500; padding: 0.2em 0.7em; cursor: pointer; border-radius: 6px; transition: background 0.18s, color 0.18s, border-color 0.18s; text-decoration: underline; }
-    a { color: var(--silver); text-decoration: underline; transition: color 0.2s; }
-    a:hover, a:focus { color: var(--accent); text-decoration: underline; }
+    .footer-btn:hover, .footer-btn:focus { background: var(--button-hover-bg); color: var(--button-hover-text); border-color: var(--button-hover-border); outline: none; text-decoration: none; }
 
-    @media (max-width: 900px) {
-      .service-grid { grid-template-columns: 1fr 1fr; gap: 1.1rem; }
-      .service-box { height: 180px; }
-      .service-img { width: 60px; height: 60px; }
-    }
+    .mobile-bottom-nav { display: none; }
     @media (max-width: 600px) {
       .content { padding: 1.1rem; }
       .footer-nav { gap: 1rem; }
-
-      .service-grid { grid-template-columns: 1fr; gap: 0.9rem; }
-      .service-box { height: 160px; }
-
       body { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
       footer { padding-bottom: calc(2rem + 64px + env(safe-area-inset-bottom)); }
-
       .mobile-bottom-nav {
         position: fixed; left: 0; right: 0; bottom: 0; height: 64px;
         padding: 8px 8px calc(8px + env(safe-area-inset-bottom)) 8px;
         background: var(--footer-bg); border-top: 1px solid var(--box-border);
         display: flex; justify-content: space-around; align-items: center; z-index: 1000;
       }
-      .mobile-bottom-nav .nav-item {
-        display: flex; flex-direction: column; align-items: center; gap: 0.25rem; text-decoration: none; color: var(--silver); font-size: 0.72rem; padding: 0.25rem 0.5rem; min-width: 64px;
-      }
+      .mobile-bottom-nav .nav-item { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; text-decoration: none; color: var(--silver); font-size: 0.72rem; padding: 0.25rem 0.5rem; min-width: 64px; }
       .mobile-bottom-nav .nav-item:hover, .mobile-bottom-nav .nav-item:focus { color: var(--white); }
       .mobile-bottom-nav .nav-icon { width: 42px; height: 42px; object-fit: contain; border-radius: 6px; border: 1px solid var(--box-border); background: var(--button-bg); }
     }
@@ -102,39 +84,34 @@
     <a href="index.html"><img src="assets/logo1.png" alt="LookList Logo" class="logo-img" /></a>
     <span class="header-title">Looklist</span>
     <a href="index.html" class="home-link hide-mobile">Home</a>
-    <a href="services.html" class="home-link nav-desktop" aria-current="page">Services</a>
+    <a href="services.html" class="home-link nav-desktop">Services</a>
     <a href="bookings.html" class="home-link nav-desktop">Bookings</a>
     <a href="messages.html" class="home-link nav-desktop">Messages</a>
     <a href="profile.html" class="home-link nav-desktop">Profile</a>
     <a href="signin.html" class="home-link nav-desktop" data-auth="signin">Sign in</a>
-    <a href="services.html" class="home-link show-mobile" aria-current="page">Services</a>
+    <a href="services.html" class="home-link show-mobile">Services</a>
     <a href="bookings.html" class="home-link show-mobile">Bookings</a>
     <a href="messages.html" class="home-link show-mobile">Messages</a>
     <a href="profile.html" class="home-link show-mobile">Profile</a>
   </header>
 
   <main class="content">
-    <h1>Services</h1>
-    <p class="intro">Discover premium beauty services near you. Tap a category to explore local experts.</p>
+    <h1>Search</h1>
+    <p class="intro">Find premium beauty services near you. Filter by category, keywords, location, and style.</p>
 
-    <div class="service-grid">
-      <a class="service-box" href="search.html?category=hair" aria-label="Explore Hair services">
-        <img src="assets/hair.png" alt="Hair" class="service-img" />
-        <div class="service-title">Hair</div>
-      </a>
-      <a class="service-box" href="search.html?category=henna" aria-label="Explore Henna services">
-        <img src="assets/henna.png" alt="Henna" class="service-img" />
-        <div class="service-title">Henna</div>
-      </a>
-      <a class="service-box" href="search.html?category=makeup" aria-label="Explore Makeup services">
-        <img src="assets/makeup.png" alt="Makeup" class="service-img" />
-        <div class="service-title">Makeup</div>
-      </a>
-      <a class="service-box" href="search.html?category=nails" aria-label="Explore Nails services">
-        <img src="assets/nails.png" alt="Nails" class="service-img" />
-        <div class="service-title">Nails</div>
-      </a>
-    </div>
+    <section class="filters" aria-label="Search filters">
+      <div id="active-filters" class="pill-row"></div>
+      <input id="q" class="input" placeholder="Keywords…" />
+      <input id="loc" class="input" placeholder="Location (city/postcode)…" />
+      <select id="style" class="select" aria-label="Style">
+        <option value="">All styles</option>
+        <option value="braids">Braids</option>
+        <option value="highlights">Highlights</option>
+        <option value="bridal">Bridal</option>
+      </select>
+    </section>
+
+    <section id="results" class="cards" aria-live="polite"></section>
   </main>
 
   <footer>
@@ -151,7 +128,7 @@
       <img class="nav-icon" src="assets/home.png" alt="" aria-hidden="true" />
       <span class="nav-label">Home</span>
     </a>
-    <a class="nav-item" href="services.html" aria-current="page">
+    <a class="nav-item" href="services.html">
       <img class="nav-icon" src="assets/service.png" alt="" aria-hidden="true" />
       <span class="nav-label">Services</span>
     </a>
@@ -189,5 +166,7 @@
       }
     });
   </script>
+
+  <script type="module" src="search-page.js"></script>
 </body>
 </html>
