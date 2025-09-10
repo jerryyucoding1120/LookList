@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Merchant Sign In – LookList</title>
+  <meta name="description" content="Sign in to manage your LookList merchant listings and availability." />
+  <link rel="icon" href="../assets/logo1.png" type="image/png" sizes="any" />
+  <link rel="apple-touch-icon" href="../assets/logo1.png" />
+  <link rel="shortcut icon" href="../assets/logo1.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Supabase configuration (public) -->
+  <meta name="supabase-url" content="https://rgzdgeczrncuxufkyuxf.supabase.co">
+  <meta name="supabase-anon-key" content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJnemRnZWN6cm5jdXh1Zmt5dXhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYxOTI3MTAsImV4cCI6MjA3MTc2ODcxMH0.dYt-MxnGZZqQ-pUilyMzcqSJjvlCNSvUCYpVJ6TT7dU">
+
+  <style>
+    :root {
+      --background: linear-gradient(135deg, #131415 0%, #09090a 100%);
+      --silver: #cfd8dc;
+      --dark-grey: #181a1b;
+      --box-bg: linear-gradient(135deg, #141516 0%, #18191a 100%);
+      --text: #e0e0e0;
+      --font-header: 'Poppins', sans-serif;
+      --font-body: 'Inter', Arial, sans-serif;
+      --accent: #cfd8dc;
+      --footer-bg: #101112;
+      --box-border: #252728;
+      --button-bg: #23272a;
+      --button-hover-bg: transparent;
+      --button-hover-border: #cfd8dc;
+      --button-hover-text: #cfd8dc;
+      --white: #fff;
+      --focus: #90caf9;
+    }
+    html, body { background: var(--background); color: var(--text); font-family: var(--font-body); margin: 0; padding: 0; min-height: 100vh; font-size: 18px; }
+
+    /* Header */
+    .header-bar { width: 100%; display: flex; align-items: center; justify-content: flex-start; padding: 1.1rem 2rem 1.1rem 1rem; background: var(--dark-grey); box-sizing: border-box; gap: 1.4rem; margin-bottom: 1.2rem; border-bottom: 1.5px solid var(--box-border); position: sticky; top: 0; z-index: 20; }
+    .logo-img { height: 42px; width: auto; display: block; border-radius: 12px; border: 2px solid var(--box-border); }
+    .header-title { font-family: var(--font-header); font-size: 1.9rem; font-weight: bold; color: var(--silver); margin-right: auto; letter-spacing: 1.5px; }
+    .home-link { color: var(--silver); font-family: var(--font-header); font-weight: bold; font-size: 1.18rem; text-decoration: none; background: var(--button-bg); border: 2px solid transparent; border-radius: 24px; padding: 0.32em 1.25em; cursor: pointer; transition: color 0.18s, border-color 0.18s, background 0.18s; }
+    .home-link:hover, .home-link:focus { color: var(--button-hover-text); background: var(--button-hover-bg); border-color: var(--button-hover-border); }
+    .show-mobile { display: none; } .hide-mobile { display: inline-block; }
+    .header-bar .nav-desktop { display: none; }
+    @media (min-width: 1024px) { .header-bar .nav-desktop { display: inline-block; } }
+    @media (max-width: 600px) {
+      .show-mobile { display: inline-block; }
+      .hide-mobile { display: none; }
+      .header-bar .home-link { display: none !important; }
+    }
+
+    /* Main */
+    main { max-width: 900px; margin: 2rem auto 3rem; padding: 2rem 1.25rem; background: var(--box-bg); border-radius: 20px; border: 2px solid var(--box-border); box-shadow: 0 4px 32px rgba(44,46,48,0.15); }
+    h1, h2, h3 { font-family: var(--font-header); color: var(--silver); }
+    h1 { font-size: 2.1rem; margin-bottom: 1.2rem; }
+    p, label, input, button, small { font-size: 1.02rem; line-height: 1.6; color: var(--text); }
+
+    .card { background: linear-gradient(135deg, #0c0d0e 0%, #191a1b 100%); border: 2px solid var(--box-border); border-radius: 18px; padding: 1rem; margin: 1rem 0; box-shadow: 0 1.5px 8px rgba(0,0,0,.09); }
+    .row { display: flex; gap: .8rem; flex-wrap: wrap; align-items: flex-end; }
+    .field { display: grid; gap: .35rem; min-width: 260px; flex: 1 1 320px; }
+    .field label { color: var(--silver); font-weight: 600; }
+    input[type="email"] { background: #0f1112; color: var(--text); border: 1.5px solid var(--box-border); border-radius: 12px; padding: .75rem .9rem; }
+    input[type="email"]:focus { outline: none; border-color: var(--focus); box-shadow: 0 0 0 3px rgba(144,202,249,.15); }
+
+    .actions { display: flex; gap: .8rem; flex-wrap: wrap; }
+    button, .button, .secondary { background: var(--button-bg); color: var(--silver); border: 2px solid var(--accent); padding: .8rem 1.2rem; border-radius: 14px; font-weight: 700; cursor: pointer; text-decoration: none; transition: .2s; }
+    button:hover, .button:hover, .secondary:hover { background: var(--button-hover-bg); color: var(--button-hover-text); border-color: var(--button-hover-border); box-shadow: 0 6px 24px rgba(44,46,48,.22); }
+    .muted { color: #a7b0b4; font-size: .95rem; }
+
+    .msg { margin-top: .75rem; min-height: 1.5rem; }
+
+    footer { width: 100%; background: var(--footer-bg); color: var(--silver); text-align: center; padding: 2rem 1rem 1rem 1rem; margin-top: 3rem; letter-spacing: .5px; font-size: 1.05rem; border-top: 1px solid var(--box-border); box-shadow: 0 -2px 16px rgba(44,46,48,0.08); }
+    .footer-nav { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .footer-btn { background: none; border: 2px solid transparent; color: var(--silver); font-family: var(--font-body); font-size: 1.07rem; font-weight: 500; padding: .2em .7em; cursor: pointer; border-radius: 6px; transition: background .18s, color .18s, border-color .18s; text-decoration: underline; }
+    .footer-btn:hover, .footer-btn:focus { background: var(--button-hover-bg); color: var(--button-hover-text); border-color: var(--button-hover-border); outline: none; text-decoration: none; }
+
+    /* Mobile bottom nav (ensure it doesn't cover the form) */
+    .mobile-bottom-nav { display: none; }
+    @media (max-width: 600px) {
+      main { padding: 1.1rem; }
+      .footer-nav { gap: 1rem; }
+      .mobile-bottom-nav {
+        position: fixed; left: 0; right: 0; bottom: 0; height: 64px;
+        padding: 8px 8px calc(8px + env(safe-area-inset-bottom)) 8px;
+        background: var(--footer-bg); border-top: 1px solid var(--box-border);
+        display: flex; justify-content: space-around; align-items: center; z-index: 10;
+      }
+      .mobile-bottom-nav .nav-item {
+        display: flex; flex-direction: column; align-items: center; gap: .25rem; text-decoration: none; color: var(--silver); font-size: .72rem; padding: .25rem .5rem; min-width: 64px;
+      }
+      .mobile-bottom-nav .nav-item:hover, .mobile-bottom-nav .nav-item:focus { color: var(--white); }
+      .mobile-bottom-nav .nav-icon { width: 42px; height: 42px; object-fit: contain; border-radius: 6px; border: 1px solid var(--box-border); background: var(--button-bg); }
+      body { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
+      footer { padding-bottom: calc(2rem + 64px + env(safe-area-inset-bottom)); }
+    }
+
+    /* Ensure button stays clickable above any overlapping siblings */
+    #signin-form .actions { position: relative; z-index: 11; }
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <a href="../index.html"><img src="../assets/logo1.png" alt="LookList Logo" class="logo-img" /></a>
+    <span class="header-title">Looklist</span>
+    <a href="../index.html" class="home-link hide-mobile">Home</a>
+    <a href="../services.html" class="home-link nav-desktop">Services</a>
+    <a href="../bookings.html" class="home-link nav-desktop">Bookings</a>
+    <a href="../messages.html" class="home-link nav-desktop">Messages</a>
+    <a href="../profile.html" class="home-link nav-desktop">Profile</a>
+    <a href="./index.html?signin=1" class="home-link nav-desktop" id="header-signin">Sign in</a>
+    <a href="../services.html" class="home-link show-mobile">Services</a>
+    <a href="../bookings.html" class="home-link show-mobile">Bookings</a>
+    <a href="../messages.html" class="home-link show-mobile">Messages</a>
+    <a href="../profile.html" class="home-link show-mobile">Profile</a>
+  </header>
+
+  <main>
+    <h1>Merchant sign in</h1>
+
+    <section class="card">
+      <p class="muted">Use your email to receive a magic sign-in link. After you click it, you’ll be brought back here and redirected to your dashboard.</p>
+      <form id="signin-form" class="row" autocomplete="on">
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" type="email" name="email" placeholder="you@example.com" required />
+        </div>
+        <div class="actions">
+          <button id="send-link" type="submit"
+            style="display:inline-block;background:#23272a;color:#cfd8dc;border:2px solid #cfd8dc;border-radius:28px;padding:12px 20px;font-weight:bold;font-family:Arial,Helvetica,sans-serif;cursor:pointer;">
+            Send magic link
+          </button>
+          <a class="secondary" href="./listings.html">Go to Listings</a>
+        </div>
+      </form>
+      <div id="msg" class="msg"></div>
+      <div id="signed-in" class="msg" style="display:none;"></div>
+      <div id="signed-in-actions" class="actions" style="display:none; margin-top:.5rem;">
+        <a class="button" href="./listings.html">Open My Listings</a>
+        <a class="secondary" href="./availability.html">Open Availability</a>
+        <button class="secondary" id="signout-btn" type="button">Sign out</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <nav class="footer-nav">
+      <a href="../terms.html"><button class="footer-btn">Terms of Use</button></a>
+      <a href="../privacy.html"><button class="footer-btn">Privacy Policy</button></a>
+      <a href="../cookies.html"><button class="footer-btn">Cookie Policy</button></a>
+    </nav>
+    <div>© 2025 LookList. All rights reserved.</div>
+  </footer>
+
+  <nav class="mobile-bottom-nav" aria-label="Primary">
+    <a class="nav-item" href="../index.html">
+      <img class="nav-icon" src="../assets/home.png" alt="" aria-hidden="true" />
+      <span class="nav-label">Home</span>
+    </a>
+    <a class="nav-item" href="../services.html">
+      <img class="nav-icon" src="../assets/service.png" alt="" aria-hidden="true" />
+      <span class="nav-label">Services</span>
+    </a>
+    <a class="nav-item" href="../bookings.html">
+      <img class="nav-icon" src="../assets/bookings.png" alt="" aria-hidden="true" />
+      <span class="nav-label">Bookings</span>
+    </a>
+    <a class="nav-item" href="../messages.html">
+      <img class="nav-icon" src="../assets/messages.png" alt="" aria-hidden="true" />
+      <span class="nav-label">Messages</span>
+    </a>
+    <a class="nav-item" href="../profile.html">
+      <img class="nav-icon" src="../assets/profile.png" alt="" aria-hidden="true" />
+      <span class="nav-label">Profile</span>
+    </a>
+  </nav>
+
+  
+  
+  <!-- ES module: uses shared Supabase client and merchant auth helpers -->
+  <script type="module">
+    import { sb } from '/assets/js/supabase-client.js';
+    import { signInWithEmail, signOut } from '/assets/js/merchant/auth.js';
+
+    const next = '/merchant/listings.html'; // always redirect to listings after login
+
+    const form = document.getElementById('signin-form');
+    const msg = document.getElementById('msg');
+    const signedIn = document.getElementById('signed-in');
+    const signedInActions = document.getElementById('signed-in-actions');
+    const signoutBtn = document.getElementById('signout-btn');
+    const headerSignin = document.getElementById('header-signin');
+
+    // Reflect auth state in header/link area
+    async function reflectHeader() {
+      const { data: { user } } = await sb.auth.getUser();
+      if (user) {
+        if (headerSignin) {
+          headerSignin.textContent = 'Sign out';
+          headerSignin.href = '#';
+          headerSignin.onclick = (e) => { e.preventDefault(); signOut(); };
+        }
+      } else {
+        if (headerSignin) {
+          headerSignin.textContent = 'Sign in';
+          headerSignin.href = './index.html?signin=1';
+          headerSignin.onclick = null;
+        }
+      }
+    }
+
+    // Handle both magic-link return variants:
+    // - ?code=... (requires exchangeCodeForSession)
+    // - #access_token=... (library processes and fires SIGNED_IN)
+    (async () => {
+      const url = new URL(window.location.href);
+      const code = url.searchParams.get('code') || url.searchParams.get('token_hash');
+      try {
+        if (code) {
+          // Exchange the code for a session
+          const { error } = await sb.auth.exchangeCodeForSession({ code });
+          if (error) {
+            console.error('exchangeCodeForSession error:', error);
+            msg.textContent = error.message || 'Sign-in failed while exchanging code.';
+          } else {
+            // Clean query params then redirect
+            history.replaceState(null, '', url.pathname);
+            location.replace(next);
+            return;
+          }
+        }
+      } catch (e) {
+        console.error('Unexpected auth exchange error:', e);
+      }
+
+      // If already signed in (e.g., via hash or existing session), go to listings
+      const { data: { session } } = await sb.auth.getSession();
+      if (session) {
+        location.replace(next);
+        return;
+      }
+
+      // Otherwise render current state
+      const { data: { user } } = await sb.auth.getUser();
+      if (user) {
+        signedIn.style.display = '';
+        signedIn.textContent = `Signed in as ${user.email || user.id}`;
+        signedInActions.style.display = '';
+        form.style.display = 'none';
+      } else {
+        signedIn.style.display = 'none';
+        signedInActions.style.display = 'none';
+        form.style.display = '';
+      }
+      reflectHeader();
+    })();
+
+    // Submit email → send magic link
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = new FormData(form).get('email');
+      msg.textContent = 'Sending magic link...';
+      const { error } = await signInWithEmail(String(email), next);
+      if (error) {
+        msg.textContent = error.message;
+      } else {
+        msg.textContent = 'Check your email for the sign-in link.';
+        form.reset();
+      }
+    });
+
+    // Sign out button
+    signoutBtn?.addEventListener('click', (e) => {
+      e.preventDefault();
+      signOut();
+    });
+
+    // Also handle #access_token flow
+    sb.auth.onAuthStateChange((event, session) => {
+      reflectHeader();
+      if (event === 'SIGNED_IN' && session) {
+        if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+        location.replace(next);
+      }
+    });
+  </script>
+
+</body>
+</html>

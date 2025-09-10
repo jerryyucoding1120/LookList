@@ -1,0 +1,168 @@
+// LookList — Messages page Task 5
+// Renders threads and booking actions (Accept / Decline / Cancel / Complete)
+// Requires window.supabase (from api.js) and authInit() (from auth.js)
+
+(async function () {
+  const { user } = await authInit({ requireAuth: true });
+  const FUNCTION_BASE = "https://rgzdgeczrncuxfkyuxf.supabase.co/functions/v1";
+
+  const listEl = document.querySelector('.thread-list');
+  if (!listEl) return;
+
+  function el(html) {
+    const t = document.createElement('template');
+    t.innerHTML = html.trim();
+    return t.content.firstElementChild;
+  }
+
+  function timeAgo(d) {
+    const now = new Date();
+    const diff = (now - new Date(d)) / 1000;
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff/60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff/3600) + 'h ago';
+    return new Date(d).toLocaleDateString();
+  }
+
+  async function fetchThreads() {
+    const q1 = supabase.from('threads')
+      .select('*')
+      .or(`customer_id.eq.${user.id},merchant_id.eq.${user.id}`)
+      .order('created_at', { ascending: false });
+
+    const { data: threads, error } = await q1;
+    if (error) throw error;
+    return threads || [];
+  }
+
+  async function fetchLatestMessage(thread_id) {
+    const { data, error } = await supabase
+      .from('messages')
+      .select('*')
+      .eq('thread_id', thread_id)
+      .order('created_at', { ascending: false })
+      .limit(1);
+    if (error) throw error;
+    return (data && data[0]) || null;
+  }
+
+  async function fetchBooking(booking_id) {
+    if (!booking_id) return null;
+    const { data, error } = await supabase
+      .from('bookings')
+      .select('*')
+      .eq('id', booking_id)
+      .single();
+    if (error) return null;
+    return data;
+  }
+
+  async function respondBooking(booking_id, action) {
+    const token = (await supabase.auth.getSession()).data.session?.access_token;
+    const res = await fetch(`${FUNCTION_BASE}/respond-booking`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'authorization': `Bearer ${token || ''}` },
+      body: JSON.stringify({ booking_id, action, actor_id: user.id })
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || 'Failed');
+    return data;
+  }
+
+  async function completeBooking(booking_id) {
+    const token = (await supabase.auth.getSession()).data.session?.access_token;
+    const res = await fetch(`${FUNCTION_BASE}/complete-booking`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'authorization': `Bearer ${token || ''}` },
+      body: JSON.stringify({ booking_id, actor_id: user.id })
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || 'Failed');
+    return data;
+  }
+
+  async function render() {
+    listEl.innerHTML = '<div class="note">Loading conversations…</div>';
+    const threads = await fetchThreads();
+    if (!threads.length) {
+      listEl.innerHTML = '<div class="note">No conversations yet.</div>';
+      return;
+    }
+
+    listEl.innerHTML = '';
+    for (const t of threads) {
+      const latest = await fetchLatestMessage(t.id);
+      const booking = latest?.booking_id ? await fetchBooking(latest.booking_id) : null;
+      const otherId = user.id === t.customer_id ? t.merchant_id : t.customer_id;
+
+      const summary = latest?.body || '—';
+      const when = latest?.created_at || t.created_at;
+
+      const node = el(`
+        <a href="#" class="thread" role="listitem">
+          <img class="avatar" src="assets/profile.png" alt="" aria-hidden="true"/>
+          <div>
+            <div class="thread-title">${otherId?.slice(0, 8) || 'User'}</div>
+            <p class="thread-snippet">${summary}</p>
+          </div>
+          <div class="thread-meta">${timeAgo(when)}</div>
+        </a>
+      `);
+
+      if (booking && booking.status === 'pending') {
+        const actions = document.createElement('div');
+        actions.style.marginLeft = 'auto';
+        actions.style.display = 'flex';
+        actions.style.gap = '8px';
+
+        if (user.id === booking.merchant_id) {
+          const accept = el('<button class="home-link">Accept</button>');
+          const decline = el('<button class="home-link">Decline</button>');
+          accept.onclick = async (e) => {
+            e.preventDefault();
+            accept.disabled = decline.disabled = true;
+            try { await respondBooking(booking.id, 'accept'); await render(); }
+            catch (err) { alert(err.message); accept.disabled = decline.disabled = false; }
+          };
+          decline.onclick = async (e) => {
+            e.preventDefault();
+            accept.disabled = decline.disabled = true;
+            try { await respondBooking(booking.id, 'decline'); await render(); }
+            catch (err) { alert(err.message); accept.disabled = decline.disabled = false; }
+          };
+          actions.appendChild(accept);
+          actions.appendChild(decline);
+        } else if (user.id === booking.customer_id) {
+          const cancel = el('<button class="home-link">Cancel</button>');
+          cancel.onclick = async (e) => {
+            e.preventDefault();
+            cancel.disabled = true;
+            try { await respondBooking(booking.id, 'cancel'); await render(); }
+            catch (err) { alert(err.message); cancel.disabled = false; }
+          };
+          actions.appendChild(cancel);
+        }
+        node.appendChild(actions);
+      } else if (booking && booking.status === 'confirmed' && user.id === booking.customer_id) {
+        const start = new Date(booking.start_time);
+        if (Date.now() >= +start) {
+          const done = el('<button class="home-link">Mark complete</button>');
+          done.onclick = async (e) => {
+            e.preventDefault();
+            done.disabled = true;
+            try { await completeBooking(booking.id); await render(); }
+            catch (err) { alert(err.message); done.disabled = false; }
+          };
+          node.appendChild(done);
+        }
+      }
+
+      listEl.appendChild(node);
+    }
+  }
+
+  render().catch(err => {
+    console.error(err);
+    listEl.innerHTML = '<div class="note">Failed to load messages.</div>';
+  });
+})();

@@ -56,7 +56,7 @@
     .content { max-width: 1020px; margin: 2rem auto 3rem; padding: 2rem 1.25rem; line-height: 1.65; background: var(--box-bg); border-radius: 20px; border: 2px solid var(--box-border); box-shadow: 0 4px 32px rgba(44,46,48,0.15); box-sizing: border-box; }
     .intro { color: var(--accent); font-size: 1.05rem; margin-bottom: 1rem; }
 
-    footer { width: 100%; background: var(--footer-bg); color: var(--silver); text-align: center; padding: 2rem 1rem 1rem 1rem; margin-top: 3rem; letter-spacing: 0.5px; font-size: 1.05rem; border-top: 1px solid var(--box-border); box-shadow: 0 -2px 16px rgba(44,46,48,0.08); }
+    footer { width: 100%; background: var(--footer-bg); color: var(--silver); text-align: center; padding: 2rem 1rem 1rem 1rem; margin-top: 3rem; letter-spacing: 0.5px; font-size: 1.05rem; border-top: 1.5px solid var(--box-border); box-shadow: 0 -2px 16px rgba(44,46,48,0.08); }
     .footer-nav { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem; flex-wrap: wrap; }
     .footer-btn { background: none; border: 2px solid transparent; color: var(--silver); font-family: var(--font-body); font-size: 1.07rem; font-weight: 500; padding: 0.2em 0.7em; cursor: pointer; border-radius: 6px; transition: background 0.18s, color 0.18s, border-color 0.18s; text-decoration: underline; }
     .footer-btn:hover, .footer-btn:focus { background: var(--button-hover-bg); color: var(--button-hover-text); border-color: var(--button-hover-border); outline: none; text-decoration: none; }
@@ -217,11 +217,24 @@
     };
     $lld.addEventListener("input", updateLldValue); updateLldValue();
 
+    // NEW helper for Option A: look in both localStorage + sessionStorage clients
+    async function getAuthToken() {
+      if (window.authClients) {
+        const { spLocal, spSession } = window.authClients;
+        const [l, s] = await Promise.all([
+          spLocal.auth.getSession(),
+          spSession.auth.getSession()
+        ]);
+        return l.data.session?.access_token || s.data.session?.access_token || null;
+      }
+      const { data } = await sb.auth.getSession();
+      return data.session?.access_token || null;
+    }
+
     $book.onclick = async () => {
       if (!selected) return;
 
-      const sess = await sb.auth.getSession();
-      const token = sess.data.session?.access_token;
+      const token = await getAuthToken();
       if (!token) {
         alert("Please sign in first.");
         location.href = "signin.html?next=" + encodeURIComponent(location.pathname + location.search);
